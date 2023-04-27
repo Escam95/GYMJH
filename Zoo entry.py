@@ -17,7 +17,7 @@ def eligable_num(string):
             print("That is not a valid number.")
 
 
-while True:
+while True:  # Cycle
     time = input('What kind of entry would you like to purhcase?\nFor a day entry press D,\nfor a year entry press '
                  'R\n> ')
     string = "For how many people are you buing a ticket?\n> "
