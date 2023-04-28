@@ -1,14 +1,20 @@
+import datetime as dt
+
 process_success = False
 year = False
 ages = []
 prices = []
+codes = []
+cats = []
 check = 0
 price = 0
 cost = 0
 insert = 0
+code = 0
+count = 1
 
 
-def eligable_num(que):
+def eligible(que):
     global process_success, check
     while not process_success:
         try:
@@ -22,8 +28,14 @@ def eligable_num(que):
             print("That is not a valid number.")
 
 
+def border():
+    for i in range(0, 17):
+        print('=', end='')
+    print()
+
+
 for t in range(0, 1):
-    time = input('What kind of entry would you like to purhcase?\nFor a day entry press D,\nfor a year entry press '
+    time = input('What kind of entry would you like to purchase?\nFor a day entry press D,\nfor a year entry press '
                  'R\n> ')
     if time == "D":
         year = False
@@ -34,34 +46,43 @@ for t in range(0, 1):
     else:
         print('Not what I am looking for, try again.\n')
         continue
-    que = "For how many people are you buing a ticket?\n> "
-    persons = eligable_num(que)
+    que = "For how many people are you buying a ticket?\n> "
+    persons = eligible(que)
     for person in range(0, persons):
         factor = 30
         print(str(person + 1) + '. Person')
         que = "Age: "
-        age = eligable_num(que)
+        age = eligible(que)
         if 2 < age < 16:
             factor = 20
-            print('Category: Child')
+            code = 22
+            cat = 'Child'
         elif age > 65:
             factor = 15
-            print('Category: Pensioner')
+            code = 24
+            cat = 'Pensioner'
         elif age < 3:
             print("Free entry")
             continue
         else:
-            print('Category: Adult')
+            code = 11
+            cat = 'Adult'
+        print('Category: ' + cat)
         if year:
             if factor == 20:
                 price = factor * 5 * 9
+                code = 42
             elif factor == 15:
                 price = factor * 10 * 4
+                code = 44
             else:
                 price = factor * 10 * 6
+                code = 33
         elif not year:
             price = factor * 10
         print('Price: ' + str(price))
+        cats.append(cat)
+        codes.append(code)
         prices.append(price)
         ages.append(age)
     print(ages)
@@ -71,13 +92,13 @@ for t in range(0, 1):
     print('Your final cost is: ' + str(cost) + '\n')
     while insert < cost:
         que = "Please insert money: "
-        bill = eligable_num(que)
+        bill = eligible(que)
         if bill == 10 or bill == 20 or bill == 50 or bill == 100 or bill == 200 or bill == 500 or bill == 1000\
                 or bill == 5000:
             insert += bill
             print('Inserted so far: ' + str(insert))
         else:
-            print('Not an eligable bill.')
+            print('Not an eligible bill.')
             continue
     print('Returning money, please wait...')
     while insert > cost:
@@ -96,4 +117,25 @@ for t in range(0, 1):
         else:
             print('The rest is ours to take ;]')
             break
-    print('\nThank you for your purchase')
+    print("\nThank you for your purchase\n\nHere are your tickets:\n")
+    date = dt.date.today().strftime("%y%m%d")
+    for i in range(0, len(ages)):
+        divide = 0
+        code_sum = 0
+        for j in range(0, len(date)):
+            divide += int(date[j])
+        for j in range(0, len(str(codes[i]))):
+            code_num = str(codes[i])
+            code_sum += int(code_num[j])
+        new_divide = divide + code_sum + count
+        last = 0
+        while (new_divide + last) % 10 != 0:
+            last += 1
+        spec = date + str(codes[i]) + '000' + str(count) + str(last)
+        count += 1
+        border()
+        spaces = (12 - len(cats[i]))
+        print('| ZOO PRAHA     |\n| 1 ' + cats[i] + spaces*' ' + '|\n| ' + spec + ' |')
+        border()
+        print()
+    print('Enjoy your stay!')
