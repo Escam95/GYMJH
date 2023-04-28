@@ -22,7 +22,7 @@ def eligable_num(que):
             print("That is not a valid number.")
 
 
-while True:
+for t in range(0, 1):
     time = input('What kind of entry would you like to purhcase?\nFor a day entry press D,\nfor a year entry press '
                  'R\n> ')
     if time == "D":
@@ -38,15 +38,20 @@ while True:
     persons = eligable_num(que)
     for person in range(0, persons):
         factor = 30
+        print(str(person + 1) + '. Person')
         que = "Age: "
         age = eligable_num(que)
         if 2 < age < 16:
             factor = 20
+            print('Category: Child')
         elif age > 65:
             factor = 15
+            print('Category: Pensioner')
         elif age < 3:
             print("Free entry")
             continue
+        else:
+            print('Category: Adult')
         if year:
             if factor == 20:
                 price = factor * 5 * 9
@@ -67,7 +72,8 @@ while True:
     while insert < cost:
         que = "Please insert money: "
         bill = eligable_num(que)
-        if bill == 10 or bill == 20 or bill == 50 or bill == 100 or bill == 200 or bill == 500 or bill == 1000:
+        if bill == 10 or bill == 20 or bill == 50 or bill == 100 or bill == 200 or bill == 500 or bill == 1000\
+                or bill == 5000:
             insert += bill
             print('Inserted so far: ' + str(insert))
         else:
@@ -90,4 +96,4 @@ while True:
         else:
             print('The rest is ours to take ;]')
             break
-    print('Thank you for your purchase')
+    print('\nThank you for your purchase')
