@@ -131,7 +131,7 @@ for t in range(0, 1):
         last = 0
         while (new_divide + last) % 10 != 0:
             last += 1
-        spec = date + str(codes[i]) + '000' + str(count) + str(last)
+        spec = date + str(codes[i]) + (4-len(str(count))) * '0' + str(count) + str(last)
         count += 1
         border()
         spaces = (12 - len(cats[i]))
